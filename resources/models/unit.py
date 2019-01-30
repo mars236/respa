@@ -45,27 +45,27 @@ def _get_timezone_choices():
 class Unit(ModifiableModel, AutoIdentifiedModel):
     id = models.CharField(primary_key=True, max_length=50)
     name = models.CharField(verbose_name=_('Name'), max_length=200)
-    description = models.TextField(verbose_name=_('Description'), null=True, blank=True)
+    description = models.TextField(verbose_name=_('Description'), null=True, blank=True)  # OK
 
-    location = models.PointField(verbose_name=_('Location'), null=True, srid=settings.DEFAULT_SRID)
+    location = models.PointField(verbose_name=_('Location'), null=True, srid=settings.DEFAULT_SRID)  # OK
     time_zone = models.CharField(verbose_name=_('Time zone'), max_length=50,
                                  default=_get_default_timezone)
 
     manager_email = models.EmailField(verbose_name=_('Manager email'), max_length=100, null=True, blank=True)
 
-    street_address = models.CharField(verbose_name=_('Street address'), max_length=100, null=True)
-    address_zip = models.CharField(verbose_name=_('Postal code'), max_length=10, null=True, blank=True)
-    phone = models.CharField(verbose_name=_('Phone number'), max_length=30, null=True, blank=True)
-    email = models.EmailField(verbose_name=_('Email'), max_length=100, null=True, blank=True)
-    www_url = models.URLField(verbose_name=_('WWW link'), max_length=400, null=True, blank=True)
-    address_postal_full = models.CharField(verbose_name=_('Full postal address'), max_length=100,
+    street_address = models.CharField(verbose_name=_('Street address'), max_length=100, null=True)  # OK
+    address_zip = models.CharField(verbose_name=_('Postal code'), max_length=10, null=True, blank=True)  # OK
+    phone = models.CharField(verbose_name=_('Phone number'), max_length=30, null=True, blank=True)  # OK
+    email = models.EmailField(verbose_name=_('Email'), max_length=100, null=True, blank=True)  # OK
+    www_url = models.URLField(verbose_name=_('WWW link'), max_length=400, null=True, blank=True)  # RENAMED TO 'www' in incoming data
+    address_postal_full = models.CharField(verbose_name=_('Full postal address'), max_length=100,  # OK
                                            null=True, blank=True)
-    municipality = models.ForeignKey(Municipality, null=True, blank=True, verbose_name=_('Municipality'),
+    municipality = models.ForeignKey(Municipality, null=True, blank=True, verbose_name=_('Municipality'),  # OK, probably
                                      on_delete=models.SET_NULL)
 
-    picture_url = models.URLField(verbose_name=_('Picture URL'), max_length=200,
+    picture_url = models.URLField(verbose_name=_('Picture URL'), max_length=200,  # OK
                                   null=True, blank=True)
-    picture_caption = models.CharField(verbose_name=_('Picture caption'), max_length=200,
+    picture_caption = models.CharField(verbose_name=_('Picture caption'), max_length=200,  # OK
                                        null=True, blank=True)
 
     reservable_max_days_in_advance = models.PositiveSmallIntegerField(verbose_name=_('Reservable max. days in advance'),

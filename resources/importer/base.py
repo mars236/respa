@@ -108,7 +108,7 @@ class Importer(object):
         if not obj.id:
             obj.id = self._generate_id()
 
-        muni_id = data.get('municipality')
+        muni_id = data.get('municipality')  # PROBABLY OK
         if muni_id:
             obj.municipality = get_muni(muni_id)
 

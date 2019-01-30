@@ -24,7 +24,7 @@ class TPRekImporter(Importer):
 
         data['id'] = 'tprek:' + tprek_id
 
-        ids = data.setdefault('identifiers', [])
+        ids = data.setdefault('identifiers', [])  # OK
         for id_data in ids:
             if id_data.get('namespace') == 'tprek':
                 break
@@ -33,14 +33,14 @@ class TPRekImporter(Importer):
             ids.append(id_data)
         id_data['value'] = tprek_id
 
-        location = data.get('location')
+        location = data.get('location')  # OK
         if location is not None:
             assert location['type'] == 'Point'
             coords = location['coordinates']
             point = Point(x=coords[0], y=coords[1], srid=4326)
             data['location'] = point
 
-        data['modified_at'] = dateutil.parser.parse(data['origin_last_modified_time'])
+        data['modified_at'] = dateutil.parser.parse(data['origin_last_modified_time'])  # FIXME RENAMED: 'last_modified_time'
 
         obj = syncher.get(tprek_id)
         saved_obj = self.save_unit(data, obj)
@@ -51,18 +51,18 @@ class TPRekImporter(Importer):
 
     def import_units(self, url=None):
         print("Fetching units")
-        # 25480 == Public libraries
-        # 25700 == Youth centers
-        # 25724 == Animal farm
+        # 25480 == Public libraries  # FIXME: CHANGED TO 813
+        # 25700 == Youth centers  # FIXME: CHANGED TO 468
+        # 25724 == Animal farm  # FIXME: FIND OUT NEW SERVICE ID
         if not url:
-            url = "http://api.hel.fi/servicemap/v1/unit/?service=25480,25700,25724&municipality=helsinki&include=department&page_size=1000"
+            url = "http://api.hel.fi/servicemap/v1/unit/?service=25480,25700,25724&municipality=helsinki&include=department&page_size=1000"  # FIXME CHANGE AS ABOVE + v1->v2
         resp = requests.get(url)
         assert resp.status_code == 200
         data = resp.json()
 
         if False:
             print("Fetching Louhi")
-            url = "http://api.hel.fi/servicemap/v1/unit/44401"
+            url = "http://api.hel.fi/servicemap/v1/unit/44401"  # FIXME v1 -> v2
             resp = requests.get(url)
             assert resp.status_code == 200
             louhi = resp.json()
