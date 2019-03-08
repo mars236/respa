@@ -412,6 +412,9 @@ export function copyTimePeriod(periodItem) {
     $(input).removeAttr('value');
   });
 
+  //Remove original day class. These are all new days.
+  newItem.find('.weekday-row').removeClass('original-day');
+
   //Reset initial forms in case there are some days present in the previous period.
   newItem.find('#days-management-form').find('[id$="-INITIAL_FORMS"]').val('0');
 }
