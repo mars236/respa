@@ -39,7 +39,7 @@ def _check_permissions_dict(api_client, resource, is_admin, can_make_reservation
     response = api_client.get(url)
     assert response.status_code == 200
     permissions = response.data['user_permissions']
-    assert len(permissions) == 4
+    assert len(permissions) == 5
     assert permissions['is_admin'] == is_admin
     assert permissions['can_make_reservations'] == can_make_reservations
     assert permissions['can_ignore_opening_hours'] == can_ignore_opening_hours
